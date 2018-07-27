@@ -9,6 +9,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
 import java.io.File;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Iterator;
 
 /**
  *
@@ -37,7 +43,7 @@ public class jfMainForm extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblXLSShow = new javax.swing.JTable();
         btnUnlock = new javax.swing.JButton();
-        lblBrowse = new javax.swing.JButton();
+        btnBrowse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SVN Unlocker");
@@ -51,7 +57,7 @@ public class jfMainForm extends javax.swing.JFrame {
 
         tblXLSShow.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
+                {null}
             },
             new String [] {
                 "Title 1"
@@ -68,11 +74,11 @@ public class jfMainForm extends javax.swing.JFrame {
             }
         });
 
-        lblBrowse.setText("Browse");
-        lblBrowse.setName("lblBrowse"); // NOI18N
-        lblBrowse.addActionListener(new java.awt.event.ActionListener() {
+        btnBrowse.setText("Browse");
+        btnBrowse.setName("btnBrowse"); // NOI18N
+        btnBrowse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lblBrowseActionPerformed(evt);
+                btnBrowseActionPerformed(evt);
             }
         });
 
@@ -91,7 +97,7 @@ public class jfMainForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtXLSFile, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBrowse, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 91, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -106,7 +112,7 @@ public class jfMainForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblImportXLSFile)
                     .addComponent(txtXLSFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblBrowse))
+                    .addComponent(btnBrowse))
                 .addGap(19, 19, 19)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -127,7 +133,7 @@ public class jfMainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnUnlockActionPerformed
 
-    private void lblBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblBrowseActionPerformed
+    private void btnBrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBrowseActionPerformed
 //        JFileChooser objFileChooser = new JFileChooser();
 //        objFileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
 //        int result = objFileChooser.showOpenDialog(parent);
@@ -144,8 +150,44 @@ public class jfMainForm extends javax.swing.JFrame {
             File selectedFile = objFileChooser.getSelectedFile();
             txtXLSFile.setText(selectedFile.getAbsolutePath());
         }
-        
-    }//GEN-LAST:event_lblBrowseActionPerformed
+
+        try {
+            FileInputStream excelFile = new FileInputStream(new File(txtXLSFile.getText()));
+            Workbook workbook = new XSSFWorkbook(excelFile);
+            Sheet datatypeSheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = datatypeSheet.iterator();
+            
+            
+            while (iterator.hasNext()) {
+
+                Row currentRow = iterator.next();
+                Iterator<Cell> cellIterator = currentRow.iterator();
+
+                while (cellIterator.hasNext()) {
+
+                    Cell currentCell = cellIterator.next();
+                    //getCellTypeEnum shown as deprecated for version 3.15
+                    //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
+                    if (currentCell.getCellTypeEnum() == CellType.STRING) {
+                        System.out.print(currentCell.getStringCellValue() + "--");
+                    } else if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
+                        System.out.print(currentCell.getNumericCellValue() + "--");
+                    }
+
+                }
+                System.out.println();
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+    }//GEN-LAST:event_btnBrowseActionPerformed
 
     /**
      * @param args the command line arguments
@@ -183,9 +225,9 @@ public class jfMainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBrowse;
     private javax.swing.JButton btnUnlock;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton lblBrowse;
     private javax.swing.JLabel lblImportXLSFile;
     private javax.swing.JTable tblXLSShow;
     private javax.swing.JTextField txtXLSFile;

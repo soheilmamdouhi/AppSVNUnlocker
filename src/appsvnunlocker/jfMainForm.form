@@ -38,7 +38,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtXLSFile" min="-2" pref="273" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="lblBrowse" min="-2" pref="101" max="-2" attributes="0"/>
+                      <Component id="btnBrowse" min="-2" pref="101" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="91" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -58,7 +58,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblImportXLSFile" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtXLSFile" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblBrowse" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBrowse" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="481" max="-2" attributes="0"/>
@@ -109,13 +109,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUnlockActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="lblBrowse">
+    <Component class="javax.swing.JButton" name="btnBrowse">
       <Properties>
         <Property name="text" type="java.lang.String" value="Browse"/>
-        <Property name="name" type="java.lang.String" value="lblBrowse" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="btnBrowse" noResource="true"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lblBrowseActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBrowseActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
